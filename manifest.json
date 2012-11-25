@@ -1,0 +1,30 @@
+{
+    "manifest_version":2,
+    "name": "TestFlight ATC",
+    "description": "TestFlightをサポートします。",
+    "version": "0.1",
+    "background" : {
+        "scripts": [
+            "jquery.js",
+            "background.js"
+        ]
+    },
+    "page_action": {
+        "default_icon": "icon19.png",
+        "default_title" : "TestFlight ATC",
+        "default_popup": "popup.html"
+    },
+    //"content_security_policy": "script-src 'self'; object-src 'self'",
+    "content_scripts": [
+        {
+            "matches": ["https://testflightapp.com/dashboard/builds/complete/*"],
+            "js": ["jquery.js", "contentscript.js"]
+        }
+    ],
+    "icons": {
+        "48": "icon48.png"
+    },
+    "permissions": [
+        "tabs"
+    ]
+}
