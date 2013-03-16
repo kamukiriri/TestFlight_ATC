@@ -2,7 +2,7 @@
     "manifest_version":2,
     "name": "TestFlight ATC",
     "description": "TestFlightをサポートします。",
-    "version": "0.1",
+    "version": "0.2",
     "background" : {
         "scripts": [
             "jquery.js",
@@ -25,6 +25,7 @@
         "48": "icon48.png"
     },
     "permissions": [
-        "tabs"
+        "tabs",
+        "https://testflightapp.com/dashboard/builds/complete/*"
     ]
 }
