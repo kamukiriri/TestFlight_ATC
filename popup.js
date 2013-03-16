@@ -1,12 +1,9 @@
 //TestFlight_ATC
-//
-//TODO
-//01:(MacOSのみ？)ダイアログが正常に出せないので代替え案考える
 
 //データ格納用オブジェクト
 var _strageData = {
     version: "",
-    selected: "new",
+    selected: "",
     lists: {},
 
     getSelectedList: function()
@@ -44,7 +41,7 @@ function loadStrageData()
 
         localStorage.clear();
         localStorage["version"] = chrome.runtime.getManifest().version;
-        localStorage["selected"] = "new";
+        localStorage["selected"] = "";
         localStorage["lists"] = "{}";
     }
 
@@ -80,7 +77,7 @@ function showList()
 
     $("ol").remove();
 
-    if (_strageData.selected == "new"){
+    if (_strageData.selected == ""){
         $("#loadButton").attr("disabled", "disabled");
         return;
     }else{
@@ -98,22 +95,39 @@ function showList()
 //保存処理
 function save()
 {
-    if (_strageData.selected == "new") {
+    if (_strageData.selected == "") {
         //新規の場合は名前を設定
         var listCount = Object.keys(_strageData.lists).length;
-        //TODO:01
-        //_strageData.selected = prompt("リスト名を入力してください", "list " + listCount+1);
-        _strageData.selected = "list " + (listCount+1);
+        //_strageData.selected = prompt("Please enter a name for the new list", "list " + (listCount+1);
+        $.showPrompt("Please input a name for the new list",
+                     "list " + (listCount+1),
+                     function(result){
+                        if(result === false){
+                        }else if (result.length > 0) {
+                            _strageData.selected = result;
+                            sendSaveRequest();
+                        }else{
+                            $.showAlert("List name is not input");
+                        }
+                     });
+        
         //addSavedLists(_strageData.selected, true);
     }else{
         //上書きの場合は確認
-        //TODO:01
-        /*if (!confirm("上書きしますか?")) {
+        /*if (!confirm("Do you want to overwrite it?")) {
             return;
-        };
-        */
+        };*/
+        $.showConfirm("Do you want to overwrite it?",
+                        function(result){
+                            if (result){
+                                sendSaveRequest();
+                            }
+                        });
     }
+}
 
+function sendSaveRequest()
+{
     chrome.tabs.query({active: true}, function(tab){
         chrome.tabs.sendRequest(tab[0].id, {mode:"save"}, onSaveResponse);
     });
