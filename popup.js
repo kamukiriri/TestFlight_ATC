@@ -28,6 +28,7 @@ $(function(){
     $("#savedLists").change(showList);
     $("#saveButton").click(save);
     $("#loadButton").click(load);
+    $("#removeButton").click(remove);
 
     showListName();
     showList();
@@ -79,9 +80,11 @@ function showList()
 
     if (_strageData.selected == ""){
         $("#loadButton").attr("disabled", "disabled");
+        $("#removeButton").attr("disabled", "disabled");
         return;
     }else{
         $("#loadButton").removeAttr("disabled");
+        $("#removeButton").removeAttr("disabled");
     }
 
     var ol = $("<ol type='1'></ol>").appendTo("body");
@@ -117,7 +120,7 @@ function save()
         /*if (!confirm("Do you want to overwrite it?")) {
             return;
         };*/
-        $.showConfirm("Do you want to overwrite it?",
+        $.showConfirm("Do you want to overwrite this list?",
                         function(result){
                             if (result){
                                 sendSaveRequest();
@@ -159,6 +162,18 @@ function load()
         };
         chrome.tabs.sendRequest(tab.id, sendParam, function(){window.close();});
     });
+}
+
+//削除処理
+function remove()
+{
+    $.showConfirm("Do you want to remove this list?",
+                    function(result){
+                        if (result){
+                            delete _strageData.lists[_strageData.selected];
+                            window.close();
+                        }
+                    });
 }
 
 //リスト追加
