@@ -93,6 +93,10 @@ function showList()
                 .text(value)
                 .appendTo(ol);
     }); 
+
+    $("li:odd").css({
+                    "background-color": "#E3E9FF",
+                });
 }
 
 //保存処理
@@ -107,8 +111,14 @@ function save()
                      function(result){
                         if(result === false){
                         }else if (result.length > 0) {
-                            _strageData.selected = result;
-                            sendSaveRequest();
+
+                            if (result in _strageData.lists){
+                                $.showAlert("List name is already exist");
+                            }else{
+                                _strageData.selected = result;
+                                sendSaveRequest();                                
+                            }
+
                         }else{
                             $.showAlert("List name is not input");
                         }
