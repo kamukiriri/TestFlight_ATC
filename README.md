@@ -1,5 +1,5 @@
 TestFlight_ATC
-==============
+***
 
 TestFlightを支援するためのGoogleChrome用の拡張機能です。
 
@@ -17,7 +17,7 @@ iOS Dev CenterからProvisioningをインポート
 ・複数のチェック状態リストを保存できるようにした
 
 
-==============
+***
 
 GoogleChrome extension to support the TestFlight.
 
@@ -32,10 +32,10 @@ Import the Provisioning of iOS Dev Center
 
 Change history:
 2013/03/20 ver 0.2
-able to save multiple data
+  able to save multiple data
 
 
-==============
+***
 The MIT License
 
 Copyright (c) 2013 kamu
